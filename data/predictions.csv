@@ -1,21 +1,21 @@
-id,subject,body,intent,priority,sentiment,predicted_intent,predicted_priority,predicted_sentiment
-1,Payment failed,"Hello Support Team, my payment failed but the amount was deducted from my bank account. Please help.",Complaint,High,Negative,Complaint,High,Negative
-2,Unable to login,"Hi, I am unable to log into my account since yesterday. It keeps showing an error.",Complaint,High,Negative,Query,Medium,Negative
-3,Refund request,I would like to request a refund for my last transaction as the service was not delivered.,Request,High,Negative,Request,High,Neutral
-4,Application crash,The application crashes every time I try to upload a document.,Complaint,Medium,Negative,Complaint,Medium,Negative
-5,Feature request,It would be great if you could add a dark mode feature to the application.,Request,Low,Neutral,Feedback,Low,Positive
-6,Account security issue,I believe my account has been accessed without my permission. Please investigate urgently.,Complaint,High,Negative,Complaint,High,Negative
-7,Slow performance,The app has been extremely slow over the past few days and is difficult to use.,Complaint,Medium,Negative,Complaint,Medium,Negative
-8,Password reset help,I forgot my password and the reset link is not working. Please assist.,Request,High,Negative,Request,High,Negative
-9,Appreciation,Thank you for the quick resolution. I am very satisfied with the support provided.,Feedback,Low,Positive,Feedback,Low,Positive
-10,Subscription charged twice,I was charged twice for my monthly subscription. Please refund the extra amount.,Complaint,High,Negative,Request,High,Negative
-11,Invoice request,Could you please share the invoice for my last payment?,Request,Low,Neutral,Request,High,Negative
-12,Account deletion,I would like to permanently delete my account. Please let me know the process.,Request,Medium,Neutral,Request,High,Neutral
-13,Email notifications not working,I am not receiving any email notifications from the application.,Complaint,Medium,Negative,Complaint,Medium,Negative
-14,Bug report,There is a bug on the dashboard where data is not loading correctly.,Complaint,Medium,Negative,Other,Low,Neutral
-15,Upgrade plan query,Can you explain the benefits of upgrading to the premium plan?,Query,Low,Neutral,Query,Low,Neutral
-16,Trial period question,How long does the free trial last and what features are included?,Query,Low,Neutral,Query,Low,Neutral
-17,Complaint about support,I am unhappy with the delayed response from the support team.,Complaint,Medium,Negative,Feedback,Low,Positive
-18,Positive feedback,The new update looks great and the app feels much faster now.,Feedback,Low,Positive,Feedback,Low,Positive
-19,Data sync issue,My data is not syncing properly between devices.,Complaint,Medium,Negative,Complaint,Medium,Negative
-20,Login OTP issue,I am not receiving the OTP required to log in.,Complaint,High,Negative,Complaint,Medium,Negative
+id,subject,body,intent,priority,sentiment
+1,Payment failed,"Hello Support Team, my payment failed but the amount was deducted from my bank account. Please help.",Complaint,High,Negative
+2,Unable to login,"Hi, I am unable to log into my account since yesterday. It keeps showing an error.",Complaint,High,Negative
+3,Refund request,I would like to request a refund for my last transaction as the service was not delivered.,Request,High,Negative
+4,Application crash,The application crashes every time I try to upload a document.,Complaint,High,Negative
+5,Feature request,It would be great if you could add a dark mode feature to the application.,Request,Medium,Positive
+6,Account security issue,I believe my account has been accessed without my permission. Please investigate urgently.,Complaint,High,Negative
+7,Slow performance,The app has been extremely slow over the past few days and is difficult to use.,Complaint,High,Negative
+8,Password reset help,I forgot my password and the reset link is not working. Please assist.,Query,High,Negative
+9,Appreciation,Thank you for the quick resolution. I am very satisfied with the support provided.,Feedback,Low,Positive
+10,Subscription charged twice,I was charged twice for my monthly subscription. Please refund the extra amount.,Request,High,Negative
+11,Invoice request,Could you please share the invoice for my last payment?,Query,Medium,Neutral
+12,Account deletion,I would like to permanently delete my account. Please let me know the process.,Request,Medium,Neutral
+13,Email notifications not working,I am not receiving any email notifications from the application.,Complaint,High,Negative
+14,Bug report,There is a bug on the dashboard where data is not loading correctly.,Complaint,High,Negative
+15,Upgrade plan query,Can you explain the benefits of upgrading to the premium plan?,Query,Medium,Neutral
+16,Trial period question,How long does the free trial last and what features are included?,Query,Medium,Neutral
+17,Complaint about support,I am unhappy with the delayed response from the support team.,Complaint,High,Negative
+18,Positive feedback,The new update looks great and the app feels much faster now.,Feedback,Low,Positive
+19,Data sync issue,My data is not syncing properly between devices.,Complaint,High,Negative
+20,Login OTP issue,I am not receiving the OTP required to log in.,Complaint,High,Negative

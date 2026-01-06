@@ -1,23 +1,55 @@
-print("🚀 classify_batch.py is running")
-
+import sys
+import os
 import pandas as pd
-from llm_client import classify_email
+from tqdm import tqdm
 
-print("✅ Imports successful")
+# Add project root to Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-df = pd.read_csv("data/labelled_emails.csv")
-print("✅ Data loaded:", len(df), "rows")
+from src.llm_client import classify_email
 
-results = []
+INPUT_CSV = "data/raw_emails.csv"
+OUTPUT_CSV = "data/predictions.csv"
 
-for _, row in df.iterrows():
-    result = classify_email(row["subject"], row["body"])
-    results.append(result)
 
-df["predicted_intent"] = [r["intent"] for r in results]
-df["predicted_priority"] = [r["priority"] for r in results]
-df["predicted_sentiment"] = [r["sentiment"] for r in results]
+def main():
+    print("📄 Loading input CSV...")
+    df = pd.read_csv(INPUT_CSV)
 
-df.to_csv("data/predictions.csv", index=False)
+    required_cols = {"subject", "body"}
+    if not required_cols.issubset(df.columns):
+        raise ValueError("CSV must contain 'subject' and 'body' columns")
 
-print("✅ predictions.csv written successfully")
+    predictions = []
+
+    print("🤖 Classifying emails using local Mistral LLM...\n")
+
+    for _, row in tqdm(df.iterrows(), total=len(df)):
+        try:
+            result = classify_email(
+                subject=str(row["subject"]),
+                body=str(row["body"])
+            )
+        except Exception as e:
+            print(f"⚠️ Classification failed for one row: {e}")
+            result = {
+                "intent": "Other",
+                "priority": "Low",
+                "sentiment": "Neutral"
+            }
+
+        predictions.append(result)
+
+    result_df = pd.concat(
+        [df.reset_index(drop=True), pd.DataFrame(predictions)],
+        axis=1
+    )
+
+    result_df.to_csv(OUTPUT_CSV, index=False)
+
+    print("\n✅ Batch classification completed")
+    print(f"📁 Output saved to: {OUTPUT_CSV}")
+
+
+if __name__ == "__main__":
+    main()

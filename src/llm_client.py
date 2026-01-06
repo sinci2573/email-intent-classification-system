@@ -1,75 +1,75 @@
+import requests
+import json
+import re
+
+OLLAMA_URL = "http://localhost:11434/api/generate"
+MODEL_NAME = "mistral"
+
+ALLOWED_INTENTS = {"Complaint", "Request", "Query", "Feedback", "Other"}
+ALLOWED_PRIORITIES = {"Low", "Medium", "High"}
+ALLOWED_SENTIMENTS = {"Positive", "Neutral", "Negative"}
+
+
+def build_prompt(subject: str, body: str) -> str:
+    return f"""
+Classify the email below.
+
+Respond with ONLY this JSON format and NOTHING else:
+{{"intent":"Complaint|Request|Query|Feedback|Other",
+  "priority":"Low|Medium|High",
+  "sentiment":"Positive|Neutral|Negative"}}
+
+Subject: {subject}
+Body: {body}
+"""
+
+
 def classify_email(subject: str, body: str) -> dict:
-    """
-    Final hardened mock LLM classifier.
-    Handles intent, priority, and sentiment with strong rule hierarchy.
-    """
+    prompt = build_prompt(subject, body)
 
-    text = f"{subject} {body}".lower()
+    response = requests.post(
+        OLLAMA_URL,
+        json={
+            "model": MODEL_NAME,
+            "prompt": prompt,
+            "stream": False
+        },
+        timeout=180
 
-    # Defaults
-    intent = "Other"
-    priority = "Low"
-    sentiment = "Neutral"
+    )
 
-    # 1️⃣ SENTIMENT (first, independent)
-    if any(word in text for word in [
-        "thank", "thanks", "appreciate", "great", "happy", "love", "excellent"
-    ]):
-        sentiment = "Positive"
+    # Fail fast if Ollama fails
+    response.raise_for_status()
 
-    if any(word in text for word in [
-        "frustrating", "angry", "upset", "not working",
-        "failed", "error", "hacked", "compromised"
-    ]):
-        sentiment = "Negative"
+    raw_output = response.json().get("response", "")
 
-    # 2️⃣ SECURITY ISSUES (always complaints, always high priority)
-    if any(word in text for word in [
-        "security", "hacked", "suspicious", "compromised", "unauthorized"
-    ]):
-        intent = "Complaint"
-        priority = "High"
-        sentiment = "Negative"
+    # Extract JSON safely
+    match = re.search(r"\{[\s\S]*?\}", raw_output)
+    if not match:
+        raise ValueError("LLM response did not contain valid JSON")
 
-    # 3️⃣ PERFORMANCE ISSUES (non-payment complaints)
-    elif any(word in text for word in [ 
-        "slow", "freezes", "lag", "laggy", "performance", "unresponsive"
-]):
-        intent = "Complaint"
-        priority = "Medium"
-        sentiment = "Negative"
+    try:
+        result = json.loads(match.group())
+    except json.JSONDecodeError:
+        raise ValueError("Failed to parse JSON from LLM response")
 
-    # 4 PAYMENT & SERVICE FAILURES (complaints)
-    elif any(word in text for word in [
-        "payment", "charged", "deducted",
-        "not activated", "not active",
-        "service not working", "subscription"
-    ]):
-        intent = "Complaint"
-        priority = "High"
-        sentiment = "Negative"
+    # Validate required keys
+    for key in ["intent", "priority", "sentiment"]:
+        if key not in result:
+            raise ValueError(f"Missing key in LLM response: {key}")
 
-    # 5 FEATURE REQUESTS
-    elif any(word in text for word in [
-        "add", "feature", "request", "could you", "please add", "suggestion"
-    ]):
-        intent = "Request"
-        priority = "Low"
+    # Validate allowed values
+    if result["intent"] not in ALLOWED_INTENTS:
+        raise ValueError(f"Invalid intent value: {result['intent']}")
 
-    # 6 QUESTIONS / QUERIES
-    elif any(word in text for word in [
-        "how", "what", "can you explain", "when", "why"
-    ]):
-        intent = "Query"
-        priority = "Low"
+    if result["priority"] not in ALLOWED_PRIORITIES:
+        raise ValueError(f"Invalid priority value: {result['priority']}")
 
-    # 7 PURE FEEDBACK (protected)
-    elif sentiment == "Positive":
-        intent = "Feedback"
-        priority = "Low"
+    if result["sentiment"] not in ALLOWED_SENTIMENTS:
+        raise ValueError(f"Invalid sentiment value: {result['sentiment']}")
 
     return {
-        "intent": intent,
-        "priority": priority,
-        "sentiment": sentiment
+        "intent": result["intent"],
+        "priority": result["priority"],
+        "sentiment": result["sentiment"]
     }
