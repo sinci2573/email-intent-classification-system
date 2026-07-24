@@ -129,7 +129,7 @@ for every email and displays the results through the Streamlit interface or expo
 ![Batch](screenshots/batch-classification.png)
 
 ### Prediction Results
-![Results](screenshots/results.png)
+![Results](screenshots/result.png)
 
 ## Author
 
