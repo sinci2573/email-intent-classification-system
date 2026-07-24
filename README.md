@@ -1,124 +1,124 @@
-# 📧 Email Intent & Priority Classifier
+# Email Intent Classification System
 
-A Streamlit-based application that classifies customer support emails into **intent**, **priority**, and **sentiment** using an **LLM-powered classifier with a rule-based fallback**.  
-The system supports both **single email classification** and **batch classification via CSV upload**.
-
----
-
-## 🚀 Features
-
-- **Single Email Classification**
-  - Input email subject and body
-  - Predicts:
-    - Intent (Complaint, Request, Query, Feedback, Other)
-    - Priority (Low, Medium, High)
-    - Sentiment (Positive, Neutral, Negative)
-
-- **Batch Email Classification (CSV Upload)**
-  - Upload a CSV file containing multiple emails
-  - Automatically classifies each email
-  - Download results as a new CSV file
-
-- **LLM-Powered Classification**
-  - Uses OpenAI GPT for accurate, context-aware predictions
-  - Handles real-world language and edge cases
-
-- **Fallback Safety Mechanism**
-  - If the LLM is unavailable, the system falls back to a rule-based classifier
-  - Ensures the app remains stable during demos and testing
-
-- **Clean & Modular Architecture**
-  - UI, business logic, and data handling are clearly separated
-  - Easy to maintain and extend
+An intelligent email classification system that analyzes customer emails and automatically predicts **intent**, **priority**, and **sentiment** using Large Language Models (LLMs). The project includes both a command-line workflow and an interactive Streamlit application for single and batch email classification.
 
 ---
 
-## 🛠 Tech Stack
-- Python  
-- Streamlit  
-- OpenAI API  
-- Pandas  
-- Git & GitHub  
+## Overview
+
+Customer support teams receive hundreds of emails every day. Manually categorizing these emails is time-consuming and inconsistent.
+
+This project automates that process by classifying emails into:
+
+- Intent (Complaint, Request, Query, Feedback, Other)
+- Priority (High, Medium, Low)
+- Sentiment (Positive, Neutral, Negative)
+
+The system supports both individual email classification and batch processing for larger datasets.
 
 ---
 
-## 📁 Project Structure
-email-intent-classifier/
-- │
-- ├── app/
-- │ └── app_streamlit.py # Streamlit UI (single + batch classification)
-- │
-- ├── src/
-- │ ├── llm_client.py # LLM classifier with rule-based fallback
-- │ ├── classify_batch.py # Batch classification script
-- │ ├── evaluate.py # Evaluation & metrics
-- │
-- ├── data/
-- │ ├── raw_emails.csv
-- │ ├── labelled_emails.csv
-- │ └── predictions.csv
-- │
-- ├── requirements.txt
-- ├── .gitignore
-- └── README.md
+## Features
 
+- Intelligent email classification using OpenAI LLMs
+- Single email prediction
+- Batch email processing
+- Interactive Streamlit web application
+- CSV import and prediction export
+- Modular and maintainable code structure
+- Evaluation utilities for prediction analysis
 
 ---
 
-## ⚙️ Setup Instructions
+## Tech Stack
 
-### Clone the repository
-git clone https://github.com/sinci2573/email-intent-classifier.git
-cd email-intent-classifier
+- Python
+- OpenAI API
+- Streamlit
+- Pandas
+- NumPy
+- Git
 
-## Create and activate virtual environment
-python -m venv venv
-venv\Scripts\activate
+---
 
-## Install dependencies
+## Project Structure
+
+```text
+email-intent-classification-system
+│
+├── app/
+│   └── app.py
+│
+├── data/
+│
+├── src/
+│   ├── classify_batch.py
+│   ├── evaluate.py
+│   ├── explore_data.py
+│   ├── llm_client.py
+│   └── single_email_classifier.py
+│
+├── requirements.txt
+├── .gitignore
+└── README.md
+```
+
+---
+
+## Getting Started
+
+Clone the repository
+
+```bash
+git clone https://github.com/sinci2573/email-intent-classification-system.git
+cd email-intent-classification-system
+```
+
+Install dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
-## Set up environment variables
-- Create a .env file in the project root:
-- OPENAI_API_KEY=YOUR_API_KEY
-- The .env file is ignored by Git for security reasons.
+Create a `.env` file
 
-## ▶️ Running the Application
-streamlit run app/app_streamlit.py
+```env
+OPENAI_API_KEY=your_api_key_here
+```
 
-The app will be available at:
-http://localhost:8501
+Run the Streamlit application
 
-## 📊 CSV File Format
-- The CSV file must contain the following columns:
+```bash
+streamlit run app/app.py
+```
 
-- subject	              - body
-   -Email subject	        - Email body content
+---
 
-- The output CSV will include:
-   - intent
-   - priority
-   - sentiment
+## Sample Output
 
-## 🧠 Design Decisions
+The model predicts:
 
-- The project initially used rule-based logic for transparency and testing
-- It was later upgraded to an LLM-based classifier for improved accuracy
-- A fallback mechanism ensures reliability when the LLM is unavailable
-- The same logic is reused for both real-time and batch processing
+- Intent
+- Priority
+- Sentiment
 
-## 🤝 Collaboration
-This project was developed collaboratively using GitHub with clean commit practices and secure handling of sensitive data.
+for every email and displays the results through the Streamlit interface or exports them as CSV files during batch processing.
 
-## 🔮 Future Enhancements
+---
 
-- Confidence scores for predictions
-- Improved evaluation metrics
-- Support for larger CSV files
-- Cloud deployment
-- Fine-tuned domain-specific LLM models
+## Future Improvements
 
-## 👩‍💻 Authors
-- Sinchana Suresh Ganiga
-- Rithika Vinukumar
+- Fine-tuned transformer models
+- Multi-language email support
+- Confidence score prediction
+- Email summarization
+- REST API deployment
+- Docker containerization
 
+---
+
+## Author
+
+**Sinchana Suresh Ganiga**
+
+Software Development Engineer | AI/ML Enthusiast | Data Engineering
