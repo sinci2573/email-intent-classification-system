@@ -117,8 +117,24 @@ for every email and displays the results through the Streamlit interface or expo
 
 ---
 
+## Screenshots
+
+### Home
+![Home](screenshots/home.png)
+
+### Single Email Classification
+![Single](screenshots/single-classification.png)
+
+### Batch Classification
+![Batch](screenshots/batch-classification.png)
+
+### Prediction Results
+![Results](screenshots/results.png)
+
 ## Author
 
 **Sinchana Suresh Ganiga**
 
 Software Development Engineer | AI/ML Enthusiast | Data Engineering
+
+
